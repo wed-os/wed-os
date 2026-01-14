@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "jsx": "react-jsx",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "noEmit": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowImportingTsExtensions": true,
+        "baseUrl": ".",
+        "paths": {
+            "@shared/*": ["src/shared/*"],
+            "@core/*": ["src/core/*"],
+            "@runtime/*": ["src/runtime/*"],
+            "@root/*": ["*"]
+        }
+    },
+    "include": ["src", "C/apps"],
+    "exclude": ["node_modules"]
+}

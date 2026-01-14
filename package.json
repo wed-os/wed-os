@@ -1,0 +1,20 @@
+{
+    "name": "wed-os",
+    "version": "0.1.0",
+    "description": "Hệ điều hành chạy trên wed.",
+    "author": {
+        "name": "tientq64",
+        "email": "tientq64@gmail.com"
+    },
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": ""
+    },
+    "devDependencies": {
+        "prettier": "3.7.4",
+        "prettier-plugin-jsdoc": "1.8.0",
+        "prettier-plugin-tailwindcss": "0.7.2",
+        "typescript": "5.9.3"
+    }
+}

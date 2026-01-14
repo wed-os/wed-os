@@ -1,0 +1,37 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.addMissingImports.ts": "explicit",
+        "source.organizeImports": "explicit",
+        "source.fixAll.ts": "explicit"
+    },
+    "typescript.preferences.useAliasesForRenames": false,
+    // "typescript.preferences.importModuleSpecifier": "non-relative",
+    // "typescript.tsdk": "node_modules\\typescript\\lib",
+    "files.readonlyInclude": {},
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "material-icon-theme.folders.associations": {
+        "runtime": "tasks",
+        "C": "dump"
+    },
+    "search.exclude": {
+        "node_modules": true,
+        "pnpm-lock.yaml": true
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "[tailwindcss]": {
+        "editor.formatOnSave": true
+    },
+    "[html]": {
+        "editor.formatOnSave": true
+    },
+    "[markdown]": {
+        "editor.formatOnSave": true
+    }
+}
