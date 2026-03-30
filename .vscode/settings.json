@@ -4,15 +4,15 @@
         "source.organizeImports": "explicit",
         "source.fixAll.ts": "explicit"
     },
-    "typescript.preferences.useAliasesForRenames": false,
-    // "typescript.preferences.importModuleSpecifier": "non-relative",
-    // "typescript.tsdk": "node_modules\\typescript\\lib",
+    "js/ts.preferences.useAliasesForRenames": false,
+    "js/ts.preferences.importModuleSpecifier": "non-relative",
+    "js/ts.tsdk.path": "node_modules\\typescript\\lib",
     "files.readonlyInclude": {},
     "files.associations": {
         "*.css": "tailwindcss"
     },
     "material-icon-theme.folders.associations": {
-        "runtime": "tasks",
+        "task": "tasks",
         "C": "dump"
     },
     "search.exclude": {

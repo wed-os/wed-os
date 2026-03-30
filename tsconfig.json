@@ -13,14 +13,17 @@
         "skipLibCheck": true,
         "noFallthroughCasesInSwitch": true,
         "allowImportingTsExtensions": true,
+        "strictNullChecks": true,
         "baseUrl": ".",
         "paths": {
             "@shared/*": ["src/shared/*"],
+            "@system/*": ["src/system/*"],
             "@core/*": ["src/core/*"],
-            "@runtime/*": ["src/runtime/*"],
+            "@bridge/*": ["src/bridge/*"],
+            "@task/*": ["src/task/*"],
             "@root/*": ["*"]
         }
     },
-    "include": ["src", "C/apps"],
+    "include": ["src", "C/apps", "boot.ts", "paths.ts"],
     "exclude": ["node_modules"]
 }

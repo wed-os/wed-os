@@ -5,13 +5,10 @@
     "singleQuote": true,
     "tabWidth": 4,
     "trailingComma": "none",
-    "plugins": [
-        "prettier-plugin-jsdoc",
-        "prettier-plugin-tailwindcss"
-    ],
+    "plugins": ["prettier-plugin-jsdoc", "prettier-plugin-tailwindcss"],
     "jsdocDescriptionWithDot": true,
     "jsdocPrintWidth": 90,
     "jsdocCommentLineStrategy": "multiline",
-    "tailwindAttributes": [ "/[\\w+]ClassName/"],
+    "tailwindAttributes": ["/[\\w+]ClassName/"],
     "tailwindFunctions": ["clsx"]
 }
