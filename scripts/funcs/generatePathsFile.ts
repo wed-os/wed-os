@@ -3,11 +3,8 @@ import { writeFileSync } from 'fs'
 
 export function generatePathsFile(): void {
     const globs = {
-        codes: '/src/{shared,system,core,bridge,task}/**/*.{tsx,ts}',
-        sharedCss: '/src/shared/**/*.css',
-        systemCss: '/src/system/**/*.css',
+        codes: '/src/{core,task}/**/*.{tsx,ts}',
         coreCss: '/src/core/**/*.css',
-        bridgeCss: '/src/bridge/**/*.css',
         taskCss: '/src/task/**/*.css',
         apps: '/C/apps/*',
         excludedApps: '/C/!(apps)/**'
@@ -35,4 +32,5 @@ export function generatePathsFile(): void {
     ]
     const code = codes.flat(2).join('\n')
     writeFileSync('paths.ts', code)
+    console.log('Đã tạo paths file.')
 }

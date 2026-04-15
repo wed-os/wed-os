@@ -16,14 +16,12 @@
         "strictNullChecks": true,
         "baseUrl": ".",
         "paths": {
-            "@shared/*": ["src/shared/*"],
-            "@system/*": ["src/system/*"],
             "@core/*": ["src/core/*"],
-            "@bridge/*": ["src/bridge/*"],
             "@task/*": ["src/task/*"],
+            "@scripts/*": ["scripts/*"],
             "@root/*": ["*"]
         }
     },
-    "include": ["src", "C/apps", "boot.ts", "paths.ts"],
+    "include": ["src", "scripts", "tests", "C/apps", "boot.ts", "paths.ts"],
     "exclude": ["node_modules"]
 }

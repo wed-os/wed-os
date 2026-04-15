@@ -1,44 +1,92 @@
 export const paths = {
-/** /src/{shared,system,core,bridge,task}/**\/*.{tsx,ts} */
+/** /src/{core,task}/**\/*.{tsx,ts} */
 codes: [
     "/src/core/script.tsx",
     "/src/core/types.ts",
+    "/src/core/components/CoreApp.tsx",
+    "/src/core/components/Window.tsx",
+    "/src/core/constants/coreMembers.ts",
+    "/src/core/constants/fs.ts",
+    "/src/core/constants/os.ts",
+    "/src/core/funcs/entToPath.ts",
+    "/src/core/funcs/makeEnt.ts",
+    "/src/core/funcs/runCoreTask.ts",
+    "/src/core/generated/funcs.ts",
+    "/src/core/generated/helpers.ts",
+    "/src/core/generated/remoteNames.ts",
+    "/src/core/generated/remotes.ts",
+    "/src/core/generated/states.ts",
+    "/src/core/generated/stores.ts",
+    "/src/core/hooks/useDesktopRectEffect.ts",
+    "/src/core/remotes/installApp.ts",
+    "/src/core/remotes/readFile.ts",
+    "/src/core/remotes/writeFile.ts",
+    "/src/core/stores/coreTasks.ts",
+    "/src/core/types/coreMembers.d.ts",
+    "/src/core/types/CoreTask.ts",
     "/src/task/script.tsx",
-    "/src/task/types.ts",
-    "/src/shared/script.tsx",
-    "/src/shared/types.ts",
-    "/src/shared/funcs/upperFirst.ts",
-    "/src/system/script.tsx",
-    "/src/system/types.ts",
-    "/src/bridge/script.tsx",
-    "/src/bridge/types.ts"
-],
-/** /src/shared/**\/*.css */
-sharedCss: [
-    "/src/shared/style.css"
-],
-/** /src/system/**\/*.css */
-systemCss: [
-    "/src/system/style.css"
+    "/src/task/components/TaskApp.tsx",
+    "/src/task/constants/appInstallModes.ts",
+    "/src/task/constants/appSchema.ts",
+    "/src/task/constants/appTypes.ts",
+    "/src/task/constants/desktopBgTypes.ts",
+    "/src/task/constants/taskMembers.ts",
+    "/src/task/constants/ts.ts",
+    "/src/task/constants/zod.ts",
+    "/src/task/funcs/absPath.ts",
+    "/src/task/funcs/basePath.ts",
+    "/src/task/funcs/dirPath.ts",
+    "/src/task/funcs/dumpYaml.ts",
+    "/src/task/funcs/extPath.ts",
+    "/src/task/funcs/getApp.ts",
+    "/src/task/funcs/getAppTypeItem.ts",
+    "/src/task/funcs/getNextId.ts",
+    "/src/task/funcs/isAbsPath.ts",
+    "/src/task/funcs/isObject.ts",
+    "/src/task/funcs/joinPath.ts",
+    "/src/task/funcs/nanoId.ts",
+    "/src/task/funcs/normPath.ts",
+    "/src/task/funcs/parseYaml.ts",
+    "/src/task/funcs/resolvePath.ts",
+    "/src/task/funcs/splitPath.ts",
+    "/src/task/funcs/stemPath.ts",
+    "/src/task/funcs/upperFirst.ts",
+    "/src/task/generated/funcs.ts",
+    "/src/task/generated/helpers.ts",
+    "/src/task/generated/remoteNames.ts",
+    "/src/task/generated/remotes.ts",
+    "/src/task/generated/states.ts",
+    "/src/task/generated/stores.ts",
+    "/src/task/helpers/makeTaskTask.ts",
+    "/src/task/states/meta.ts",
+    "/src/task/states/taskRect.ts",
+    "/src/task/stores/apps.ts",
+    "/src/task/stores/desktopBg.ts",
+    "/src/task/stores/desktopRect.ts",
+    "/src/task/stores/tasks.ts",
+    "/src/task/types/App.ts",
+    "/src/task/types/Ent.ts",
+    "/src/task/types/Task.ts",
+    "/src/task/types/taskMembers.d.ts",
+    "/src/task/types/TaskTask.ts",
+    "/src/task/types/types.ts"
 ],
 /** /src/core/**\/*.css */
-coreCss: [
-    "/src/core/style.css"
-],
-/** /src/bridge/**\/*.css */
-bridgeCss: [
-    "/src/bridge/style.css"
-],
+coreCss: [],
 /** /src/task/**\/*.css */
 taskCss: [
     "/src/task/style.css"
 ],
 /** /C/apps/* */
-apps: [],
+apps: [
+    "/C/apps/WedOS"
+],
 /** /C/!(apps)/** */
 excludedApps: [
     "/C/images",
     "/C/images/icons",
-    "/C/images/icons/icon.png"
+    "/C/images/wallpapers",
+    "/C/images/icons/icon.png",
+    "/C/images/wallpapers/white-cliffs-coastline.jpg"
 ],
 }

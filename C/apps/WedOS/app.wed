@@ -1,0 +1,4 @@
+name: WedOS
+type: os
+fullscreen: true
+noHeader: true

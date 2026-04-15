@@ -1,5 +1,7 @@
-import { generatePathsFile } from '../funcs/generatePathsFile'
-import { startDevServer } from '../funcs/startDevServer'
+import { startDevServer } from '@scripts/funcs/startDevServer'
+import { watchCodeFiles } from '@scripts/funcs/watchCodeFiles'
+import { watchPathsFile } from '@scripts/funcs/watchPathsFile'
 
-generatePathsFile()
+watchPathsFile()
+watchCodeFiles()
 startDevServer()

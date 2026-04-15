@@ -7,13 +7,20 @@
     "js/ts.preferences.useAliasesForRenames": false,
     "js/ts.preferences.importModuleSpecifier": "non-relative",
     "js/ts.tsdk.path": "node_modules\\typescript\\lib",
-    "files.readonlyInclude": {},
+    "files.readonlyInclude": {
+        "src/core/generated/**": true,
+        "src/task/generated/**": true
+    },
     "files.associations": {
-        "*.css": "tailwindcss"
+        "*.css": "tailwindcss",
+        "*.wed": "yaml"
     },
     "material-icon-theme.folders.associations": {
         "task": "tasks",
         "C": "dump"
+    },
+    "material-icon-theme.files.associations": {
+        "*.wed": "disc"
     },
     "search.exclude": {
         "node_modules": true,
@@ -29,6 +36,9 @@
         "editor.formatOnSave": true
     },
     "[html]": {
+        "editor.formatOnSave": true
+    },
+    "[yaml]": {
         "editor.formatOnSave": true
     },
     "[markdown]": {

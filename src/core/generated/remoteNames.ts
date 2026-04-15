@@ -1,0 +1,1 @@
+const remoteNames: string[] = ["installApp","readFile","writeFile"]

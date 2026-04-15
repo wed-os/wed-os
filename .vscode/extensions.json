@@ -3,6 +3,7 @@
         "bradlc.vscode-tailwindcss",
         "esbenp.prettier-vscode",
         "ije.esm-vscode",
-        "PKief.material-icon-theme"
+        "PKief.material-icon-theme",
+        "GitHub.github-vscode-theme"
     ]
 }

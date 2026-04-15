@@ -1,0 +1,13 @@
+@reference 'tailwindcss';
+
+@theme {
+    --default-font-family: 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+}
+
+html {
+    @apply h-full;
+}
+
+body {
+    @apply h-full overflow-hidden bg-zinc-900 text-white;
+}

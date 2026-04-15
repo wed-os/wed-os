@@ -15,9 +15,9 @@ function esbuildWedOSPlugin(codesMap, isCoreSide) {
             build.onResolve({ filter: /.*/ }, ({ path, resolveDir, importer }) => {
                 if (path[0] === '.') {
                     path = new URL(path, `file://${resolveDir}/`).pathname
-                } else if (/^@(shared|system|core|bridge|task|root)\//.test(path)) {
-                    path = path
-                        .replace(/^@(shared|system|core|bridge|task)\//, '/src/$1/')
+                } else if (/^@(core|task|root)\//.test(path)) {
+                    path = path //
+                        .replace(/^@(core|task)\//, '/src/$1/')
                         .replace(/^@root\//, '/')
                 }
                 if (importer === '/src/task/components/App') {
@@ -30,10 +30,7 @@ function esbuildWedOSPlugin(codesMap, isCoreSide) {
             build.onLoad({ filter: /.*/, namespace: 'wedos' }, ({ path }) => {
                 const resolveDir = path.split('/').slice(0, -1).join('/') || '/'
                 let code = codesMap[path]
-                if (isCoreSide) {
-                    const isTaskSidePath = /^\/src\/(bridge|task)\b/.test(path)
-                    if (isTaskSidePath) code = ''
-                } else {
+                if (!isCoreSide) {
                     const isCoreSidePath = /^\/src\/core\b/.test(path)
                     if (isCoreSidePath) code = ''
                 }

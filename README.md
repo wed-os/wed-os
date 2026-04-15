@@ -15,11 +15,11 @@
 
 ## 📰 Giới thiệu
 
-Hệ điều hành chạy trên **wed**.
+Hệ điều hành chạy trên ~~web~~ **wed**.
 
 ## 📖 Sử dụng
 
-Truy cập [https://wedos.vercel.app](https://wedos.vercel.app).
+Truy cập trang wed: [https://wedos.vercel.app](https://wedos.vercel.app).
 
 ## ✍️ Ghi công
 
