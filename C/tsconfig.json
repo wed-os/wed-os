@@ -1,0 +1,12 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "wedos": ["../api/api.ts"]
+        }
+    },
+    "include": ["**/*"],
+    "exclude": ["node_modules", "../scripts", "../src"],
+    "references": [{ "path": "../api" }]
+}

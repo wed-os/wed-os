@@ -4,6 +4,7 @@ import { find } from 'lodash-es'
 export function getAppTypeItem(type: AppType): AppTypeItem
 export function getAppTypeItem(type: any): AppTypeItem | undefined
 
+/** @public */
 export function getAppTypeItem(value: AppType | any): AppTypeItem | undefined {
     return find(appTypeItems, { value })
 }

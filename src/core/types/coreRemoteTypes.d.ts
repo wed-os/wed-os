@@ -1,0 +1,13 @@
+import { Asyncify } from "@task/types/types"
+import { installApp } from '@core/remotes/installApp'
+import { maximize } from '@core/remotes/maximize'
+import { minimize } from '@core/remotes/minimize'
+import { readFile } from '@core/remotes/readFile'
+import { runTask } from '@core/remotes/runTask'
+import { writeFile } from '@core/remotes/writeFile'
+export type InstallAppRemote = typeof installApp
+export type MaximizeRemote = Asyncify<typeof maximize>
+export type MinimizeRemote = Asyncify<typeof minimize>
+export type ReadFileRemote = typeof readFile
+export type RunTaskRemote = Asyncify<typeof runTask>
+export type WriteFileRemote = typeof writeFile

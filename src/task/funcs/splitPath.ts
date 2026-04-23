@@ -3,6 +3,7 @@
  *
  * @param path Đường dẫn cần tách.
  * @param resolveDots Giải quyết các thư mục `.`, `..`.
+ * @public
  */
 export function splitPath(path: string, resolveDots?: boolean): [string[], string] {
     const nodes: string[] = []

@@ -2,7 +2,7 @@
 
 <p align="center">
     <br>
-    <img src="./C/images/icons/icon.png">
+    <img src="./C/images/icons/couple.png" height="">
     <br>
     <br>
     Hệ điều hành chạy trên wed.

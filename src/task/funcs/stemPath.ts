@@ -1,5 +1,6 @@
 import { basePath } from '@task/funcs/basePath'
 
+/** @public */
 export function stemPath(path: string): string {
     const base = basePath(path)
 

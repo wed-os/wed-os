@@ -1,0 +1,16 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "noEmit": false,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "baseUrl": ".",
+        "paths": {
+            "@task/*": ["../src/task/*"]
+        }
+    },
+    "include": ["**/*"],
+    "exclude": ["node_modules", "../scripts", "../C"],
+    "references": [{ "path": "../src" }]
+}

@@ -12,8 +12,8 @@
         "checkJs": false,
         "skipLibCheck": true,
         "noFallthroughCasesInSwitch": true,
-        "allowImportingTsExtensions": true,
         "strictNullChecks": true,
+        "noUncheckedIndexedAccess": true,
         "baseUrl": ".",
         "paths": {
             "@core/*": ["src/core/*"],
@@ -22,6 +22,6 @@
             "@root/*": ["*"]
         }
     },
-    "include": ["src", "scripts", "tests", "C/apps", "boot.ts", "paths.ts"],
+    "include": ["boot.ts", "scripts", "src/core/types.ts"],
     "exclude": ["node_modules"]
 }

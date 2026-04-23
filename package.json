@@ -1,6 +1,6 @@
 {
     "name": "wed-os",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Hệ điều hành chạy trên wed.",
     "author": {
         "name": "tientq64",
@@ -9,7 +9,8 @@
     "homepage": "https://wedos.vercel.app",
     "private": true,
     "scripts": {
-        "dev": "tsx scripts/commands/dev",
+        "serve": "tsx scripts/commands/serve",
+        "lint": "tsc --noEmit",
         "test": "tsx --test"
     },
     "packageManager": "pnpm@10.33.0",
@@ -28,18 +29,22 @@
         "prettier-plugin-jsdoc": "1.5.0",
         "prettier-plugin-tailwindcss": "0.7.2",
         "tailwindcss": "^4.2.2",
+        "ts-morph": "28.0.0",
         "tsx": "4.21.0",
         "typescript": "5.9.3"
     },
     "dependencies": {
         "ahooks": "3.9.7",
         "bro-fs": "^0.6.0",
+        "clsx": "2.1.1",
         "esbuild-wasm": "0.27.2",
         "js-yaml": "4.1.1",
         "lodash-es": "4.17.23",
+        "motion": "12.37.0",
         "nanoid": "5.1.7",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
+        "tailwind-merge": "3.5.0",
         "valtio": "2.3.0",
         "zod": "4.3.6"
     }

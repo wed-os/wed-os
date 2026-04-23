@@ -7,25 +7,32 @@
     "js/ts.preferences.useAliasesForRenames": false,
     "js/ts.preferences.importModuleSpecifier": "non-relative",
     "js/ts.tsdk.path": "node_modules\\typescript\\lib",
-    "files.readonlyInclude": {
-        "src/core/generated/**": true,
-        "src/task/generated/**": true
-    },
     "files.associations": {
         "*.css": "tailwindcss",
         "*.wed": "yaml"
     },
     "material-icon-theme.folders.associations": {
         "task": "tasks",
-        "C": "dump"
+        "C": "dump",
+        "proxies": "generator"
     },
     "material-icon-theme.files.associations": {
         "*.wed": "disc"
+    },
+    "files.readonlyInclude": {
+        "pnpm-lock.yaml": true,
+        "src/*/constants/{core,task}RemoteNames.ts": true,
+        "src/*/constants/{core,task}Remotes.ts": true,
+        "src/*/types/{core,task}RemoteTypes.d.ts": true,
+        "paths.ts": true,
+        "api/api.ts": true
     },
     "search.exclude": {
         "node_modules": true,
         "pnpm-lock.yaml": true
     },
+    "tailwindCSS.classFunctions": ["cn"],
+    "tailwindCSS.classAttributes": ["className", "class"],
     "[typescript]": {
         "editor.formatOnSave": true
     },

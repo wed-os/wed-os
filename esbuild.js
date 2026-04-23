@@ -1,6 +1,6 @@
 import { default as esbuild } from 'esbuild-wasm'
 
-const wasmURL = 'https://esm.sh/esbuild-wasm@0.27.2/esbuild.wasm'
+const wasmURL = 'https://esm.sh/esbuild-wasm@0.28.0/esbuild.wasm'
 await esbuild.initialize({ wasmURL })
 
 /**

@@ -5,5 +5,12 @@
         "body": [
             "console.log($1)",
         ]
+    },
+    "useOS": {
+        "scope": "typescript,typescriptreact",
+        "prefix": "uo",
+        "body": [
+            "const {$0} = useOS()",
+        ]
     }
 }

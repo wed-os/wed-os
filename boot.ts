@@ -17,6 +17,11 @@ const [coreCss = '', taskCss = ''] = await Promise.all([
 const css = coreCss + taskCss
 const style = document.querySelector<HTMLStyleElement>('#wed-css')!
 style.textContent = css
+window.taskCss = taskCss
+
+const html = await fetchText('src/task/templ.html')
+const taskTempl = html.replace(/<!-- Code injected by live-server -->.+<\/script>/s, '')
+window.taskTempl = taskTempl
 
 const codesMap: Record<string, string> = Object.fromEntries(
     await Promise.all(
@@ -25,10 +30,11 @@ const codesMap: Record<string, string> = Object.fromEntries(
         })
     )
 )
+window.codesMap = codesMap
 const result = await buildCode('@core/script', codesMap, true)
-const code = result.outputFiles?.[0].text
+const code = result.outputFiles?.[0]?.text
 if (code === undefined) {
-    throw Error('Build code lỗi')
+    throw Error('Build code lỗi.')
 }
 const script = document.querySelector<HTMLScriptElement>('#wed-js')!
 script.text = code

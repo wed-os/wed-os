@@ -1,5 +1,5 @@
 import { fs } from '@core/constants/fs'
-import { Ent } from '@task/types/Ent'
+import { Ent } from '@task/constants/ent'
 import { FileSystemEntryWithChildren } from 'bro-fs'
 
 type FsEnt = FileSystemEntry | FileSystemEntryWithChildren
@@ -17,8 +17,8 @@ export async function makeEnt(fsEnt: FsEnt): Promise<Ent> {
     }
     if ('children' in fsEnt) {
         ent.children = await Promise.all(
-            fsEnt.children.map((subFsEnt) => {
-                return makeEnt(subFsEnt)
+            fsEnt.children.map((childFsEnt) => {
+                return makeEnt(childFsEnt)
             })
         )
     }

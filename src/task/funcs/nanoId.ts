@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid'
  *
  * @param size Độ dài của ID. Mặc định là 21.
  * @returns Một nano ID.
+ * @public
  */
 export function nanoId(size?: number): string {
     return nanoid(size)

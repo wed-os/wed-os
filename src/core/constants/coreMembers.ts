@@ -1,5 +1,0 @@
-export * as coreFuncs from '@core/generated/funcs'
-export * as coreHelpers from '@core/generated/helpers'
-export * as coreRemotes from '@core/generated/remotes'
-export * as coreStates from '@core/generated/states'
-export * as coreStores from '@core/generated/stores'

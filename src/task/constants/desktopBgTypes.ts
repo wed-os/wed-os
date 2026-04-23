@@ -1,5 +1,7 @@
 /**
  * Kiểu hình nền desktop.
+ *
+ * @public
  */
 export enum DesktopBgType {
     Image = 'image',
@@ -7,12 +9,14 @@ export enum DesktopBgType {
     None = 'none'
 }
 
+/** @public */
 export interface DesktopBgTypeItem {
     value: DesktopBgType
     label: string
     description: string
 }
 
+/** @public */
 export const desktopBgTypeItems: DesktopBgTypeItem[] = [
     {
         value: DesktopBgType.Image,

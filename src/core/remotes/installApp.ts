@@ -1,15 +1,15 @@
 import { writeFile } from '@core/remotes/writeFile'
+import { App, appSchema, defaultAppIcon } from '@task/constants/app'
 import { AppInstallMode } from '@task/constants/appInstallModes'
-import { appSchema } from '@task/constants/appSchema'
 import { AppType } from '@task/constants/appTypes'
+import { os } from '@task/constants/os'
 import { isObject } from '@task/funcs/isObject'
 import { joinPath } from '@task/funcs/joinPath'
 import { nanoId } from '@task/funcs/nanoId'
 import { parseYaml } from '@task/funcs/parseYaml'
-import { apps } from '@task/stores/apps'
-import { App } from '@task/types/App'
 import { isString } from 'lodash-es'
 
+/** @public */
 export async function installApp(
     mode: AppInstallMode,
     srcPath: string,
@@ -36,13 +36,15 @@ export async function installApp(
     if (!isString(wed.name)) {
         throw Error('Tên ứng dụng không hợp lệ.')
     }
+    wed.icon ??= defaultAppIcon
 
     const appInput: App = {
         type: AppType.User,
         ...wed,
         id: nanoId(),
         path: destPath,
-        name: wed.name
+        name: wed.name,
+        icon: String(wed.icon)
     }
     const app = appSchema.parse(appInput)
 
@@ -60,7 +62,7 @@ export async function installApp(
     if (css !== null) {
         await writeFile(destCssPath, css)
     }
-    apps.push(app)
+    os.apps.push(app)
 
     return app
 }

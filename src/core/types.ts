@@ -1,3 +1,4 @@
+import { Obj } from '@task/types/types'
 import { BuildResult } from 'esbuild-wasm'
 
 declare global {
@@ -14,4 +15,8 @@ declare global {
         codesMap: Record<string, string>,
         isCoreSide: boolean
     ): Promise<BuildResult>
+
+    var taskCss: string
+    var taskTempl: string
+    var codesMap: Obj<string>
 }

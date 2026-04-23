@@ -1,5 +1,7 @@
-import { PartialApp } from '@task/types/App'
-
 export type Obj<T = unknown> = Record<string, T>
 
-export type CreateState<T> = (app?: PartialApp) => T
+export type Asyncify<F> = F extends (...args: infer A) => infer R
+    ? (...args: A) => Promise<Awaited<R>>
+    : never
+
+export type LooseString<T extends string> = T | (string & {})

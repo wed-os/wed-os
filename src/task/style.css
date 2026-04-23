@@ -1,7 +1,20 @@
 @reference 'tailwindcss';
 
-@theme {
-    --default-font-family: 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+@utility drag-none {
+    -webkit-user-drag: none;
+}
+
+@font-face {
+    src: url('/C/fonts/WedOS-Icons.ttf');
+    font-family: WedOS-Icons;
+}
+
+@layer base {
+    *,
+    ::before,
+    ::after {
+        @apply border-neutral-600 outline-neutral-600;
+    }
 }
 
 html {
@@ -9,5 +22,9 @@ html {
 }
 
 body {
-    @apply h-full overflow-hidden bg-zinc-900 text-white;
+    @apply drag-none h-full overflow-hidden bg-neutral-900 text-sm wrap-break-word text-white select-none;
+}
+
+#wed-root {
+    @apply h-full;
 }

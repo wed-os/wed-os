@@ -1,22 +1,25 @@
+/** @public */
 export enum AppType {
     OS = 'os',
-    System = 'system',
+    Core = 'core',
     User = 'user'
 }
 
+/** @public */
 export interface AppTypeItem {
     value: AppType
     label: string
 }
 
+/** @public */
 export const appTypeItems: AppTypeItem[] = [
     {
         value: AppType.OS,
         label: 'Hệ điều hành'
     },
     {
-        value: AppType.System,
-        label: 'Hệ thống'
+        value: AppType.Core,
+        label: 'Lõi'
     },
     {
         value: AppType.User,

@@ -1,4 +1,5 @@
 name: WedOS
 type: os
+icon: wed-os
 fullscreen: true
 noHeader: true

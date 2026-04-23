@@ -8,7 +8,7 @@
     "plugins": ["prettier-plugin-jsdoc", "prettier-plugin-tailwindcss"],
     "jsdocDescriptionWithDot": true,
     "jsdocPrintWidth": 90,
-    "jsdocCommentLineStrategy": "multiline",
+    "jsdocCommentLineStrategy": "singleLine",
     "tailwindAttributes": ["/[\\w+]ClassName/"],
-    "tailwindFunctions": ["clsx"]
+    "tailwindFunctions": ["cn"]
 }
