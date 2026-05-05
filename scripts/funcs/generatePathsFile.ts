@@ -6,7 +6,7 @@ export function generatePathsFile(eventName: GenerateEventName): void {
     if (eventName === 'change') return
 
     const globsMap = {
-        codes: ['/src/{core,task}/**/*.{tsx,ts}', '/paths.ts'],
+        codes: ['/src/{core,task}/**/*.{tsx,ts}', '/paths.ts', '/api/api.ts'],
         coreCss: ['/src/core/**/*.css'],
         taskCss: ['/src/task/**/*.css'],
         apps: ['/C/apps/*'],

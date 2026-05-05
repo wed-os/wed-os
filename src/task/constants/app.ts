@@ -1,3 +1,4 @@
+import { AppPermissions } from '@task/constants/appPermission'
 import { AppType } from '@task/constants/appTypes'
 import { FontIconName } from '@task/constants/iconNames'
 import { enum_, nanoid_ } from '@task/constants/zod'
@@ -46,6 +47,8 @@ export const appSchema = object({
  *
  * @public
  */
-export interface App extends output<typeof appSchema> {}
+export interface App extends output<typeof appSchema> {
+    perms: AppPermissions
+}
 
 export const defaultAppIcon: FontIconName = 'window'

@@ -1,7 +1,8 @@
-import { ExposedOS, exposedOS } from '@task/constants/exposedOs'
-import { Snapshot, useSnapshot } from 'valtio'
+import { ExposedOS, exposedOS } from '@task/constants/exposedOS'
+import { SafeSnapshot } from '@task/types/SafeSnapshot'
+import { useSnapshot } from 'valtio'
 
 /** @public useOS */
-export function useExposedOS(sync?: boolean): Snapshot<ExposedOS> {
-    return useSnapshot(exposedOS, { sync })
+export function useExposedOS(sync?: boolean): SafeSnapshot<ExposedOS> {
+    return useSnapshot(exposedOS, { sync }) as SafeSnapshot<ExposedOS>
 }

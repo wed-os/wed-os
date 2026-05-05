@@ -4,37 +4,46 @@ const wasmURL = 'https://esm.sh/esbuild-wasm@0.28.0/esbuild.wasm'
 await esbuild.initialize({ wasmURL })
 
 /**
- * @param {Record<string, string>} codesMap
  * @param {boolean} isCoreSide
+ * @param {Record<string, string>} codesMap
  * @returns {import('esbuild-wasm').Plugin}
  */
-function esbuildWedOSPlugin(codesMap, isCoreSide) {
+function esbuildWedOSPlugin(isCoreSide, codesMap) {
     return {
         name: 'wedos',
         setup(build) {
             build.onResolve({ filter: /.*/ }, ({ path, resolveDir, importer }) => {
+                const isAppImporter = importer === '/src/task/components/App' && !isCoreSide
+                let namespace = ''
                 if (path[0] === '.') {
                     path = new URL(path, `file://${resolveDir}/`).pathname
-                } else if (/^@(core|task|root)\//.test(path)) {
-                    path = path //
-                        .replace(/^@(core|task)\//, '/src/$1/')
-                        .replace(/^@root\//, '/')
                 }
-                if (importer === '/src/task/components/App') {
+                if (isAppImporter) {
+                    if (path === 'wedos') {
+                        path = '/api/api'
+                    } else {
+                        namespace = '/app:'
+                    }
+                } else {
+                    if (/^@(core|task|root)\//.test(path)) {
+                        path = path //
+                            .replace(/^@(core|task)\//, '/src/$1/')
+                            .replace(/^@root\//, '/')
+                    }
                 }
                 if (path[0] === '/') {
-                    return { path, namespace: 'wedos' }
+                    return { path, namespace }
                 }
                 return { path, external: true }
             })
-            build.onLoad({ filter: /.*/, namespace: 'wedos' }, ({ path }) => {
-                const resolveDir = path.split('/').slice(0, -1).join('/') || '/'
-                let code = codesMap[path]
-                if (!isCoreSide) {
-                    const isCoreSidePath = /^\/src\/core\b/.test(path)
-                    if (isCoreSidePath) code = ''
-                }
-                return { contents: code, loader: 'tsx', resolveDir }
+            build.onLoad({ filter: /.*/ }, ({ path, namespace }) => {
+                if (namespace === 'file') namespace = ''
+                let code = codesMap[namespace + path]
+                // if (!isCoreSide) {
+                //     const isCoreSidePath = path.startsWith('/src/core/')
+                //     if (isCoreSidePath) code = ''
+                // }
+                return { contents: code, loader: 'tsx' }
             })
         }
     }
@@ -42,11 +51,11 @@ function esbuildWedOSPlugin(codesMap, isCoreSide) {
 
 /**
  * @param {string | string[]} entryPoints
+ * @param {boolean} [isCoreSide]
  * @param {Record<string, string>} codesMap
- * @param {boolean} isCoreSide
  * @returns {import('esbuild-wasm').BuildResult}
  */
-export function buildCode(entryPoints, codesMap, isCoreSide) {
+export async function buildCode(entryPoints, isCoreSide, codesMap) {
     if (typeof entryPoints === 'string') {
         entryPoints = [entryPoints]
     }
@@ -59,8 +68,22 @@ export function buildCode(entryPoints, codesMap, isCoreSide) {
         format: 'esm',
         target: ['esnext'],
         jsx: 'automatic',
-        plugins: [esbuildWedOSPlugin(codesMap, isCoreSide)]
+        // sourcemap: true,
+        plugins: [esbuildWedOSPlugin(isCoreSide, codesMap)]
     })
 }
 
+/**
+ * @param {string} css
+ * @returns {string}
+ */
+export async function minifyCss(css) {
+    const result = await esbuild.transform(css, {
+        loader: 'css',
+        minify: true
+    })
+    return result.code
+}
+
 window.buildCode = buildCode
+window.minifyCss = minifyCss

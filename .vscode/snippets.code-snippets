@@ -1,16 +1,19 @@
 {
-    "console.log": {
-        "scope": "typescript,typescriptreact",
-        "prefix": "cl",
-        "body": [
-            "console.log($1)",
-        ]
-    },
     "useOS": {
         "scope": "typescript,typescriptreact",
         "prefix": "uo",
         "body": [
             "const {$0} = useOS()",
         ]
+    },
+    "public-jsdoc": {
+        "scope": "typescript,typescriptreact",
+        "prefix": "pb",
+        "body": "/** @public */"
+    },
+    "public-tag": {
+        "scope": "typescript,typescriptreact",
+        "prefix": "pb",
+        "body": "@public"
     }
 }

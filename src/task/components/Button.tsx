@@ -1,20 +1,22 @@
 import { Icon } from '@task/components/Icon'
+import { TextInputElementPlacementContext } from '@task/components/TextInput'
 import { IconName } from '@task/constants/iconNames'
+import { Size } from '@task/constants/size'
 import { cn } from '@task/funcs/cn'
+import { useSizeContext } from '@task/hooks/useSizeContext'
 import { Props } from '@task/types/attributes'
 import { Color } from '@task/types/Color'
-import { Size } from '@task/types/Size'
 import { Variant } from '@task/types/Variant'
-import { CSSProperties, MouseEventHandler, ReactNode } from 'react'
+import { CSSProperties, MouseEventHandler, ReactNode, useContext } from 'react'
 
-interface ButtonProps extends Props {
+export interface ButtonProps extends Props {
     style?: CSSProperties
     color?: Color
     size?: Size
     variant?: Variant
     type?: HTMLButtonElement['type']
-    onClick?: MouseEventHandler<HTMLButtonElement>
     icon?: IconName
+    onClick?: MouseEventHandler<HTMLButtonElement>
     children?: ReactNode
 }
 
@@ -23,14 +25,18 @@ export function Button({
     className,
     style,
     color = 'default',
-    size = 'medium',
-    variant = 'solid',
+    size,
+    variant,
     type,
     onClick,
     icon,
     children,
     ...props
 }: ButtonProps) {
+    const textInputElementPlacement = useContext(TextInputElementPlacementContext)
+    size = useSizeContext(size)
+    variant ??= textInputElementPlacement ? 'minimal' : 'solid'
+
     const isDefaultButton = color === 'default' && variant === 'solid'
 
     const colorClassName = buttonColorClassNames[color]
@@ -40,11 +46,12 @@ export function Button({
     return (
         <button
             className={cn(
-                'flex items-center justify-center rounded-md border active:scale-95',
+                'relative inline-flex items-center justify-center rounded-md border active:scale-95',
                 colorClassName,
                 sizeClassName,
                 variantClassName,
                 isDefaultButton && 'border-neutral-600',
+                color !== 'default' && 'z-1',
                 className
             )}
             style={style}

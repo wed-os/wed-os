@@ -1,12 +1,8 @@
 import { Window } from '@core/components/Window'
-import { getNonOSTasks } from '@core/funcs/getNonOSTasks'
-import { useOS } from '@task/hooks/useOS'
-import { useMemo } from 'react'
+import { useNonOSTasks } from '@core/hooks/useNonOSTasks'
 
 export function Desktop() {
-    const { tasks } = useOS()
-
-    const nonOSTasks = useMemo(getNonOSTasks, [tasks])
+    const nonOSTasks = useNonOSTasks()
 
     return (
         <div className="relative flex-1">

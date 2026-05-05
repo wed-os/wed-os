@@ -1,7 +1,9 @@
+import { App } from '@task/constants/app'
 import { AppType } from '@task/constants/appTypes'
-import { enum_, nanoid_ } from '@task/constants/zod'
+import { makeTaskPermissions, TaskPermissions } from '@task/constants/taskPermission'
+import { enum_ } from '@task/constants/zod'
 import { proxy } from 'valtio'
-import { boolean, int, object, output, string } from 'zod'
+import { boolean, int, object, output, string, transform } from 'zod'
 
 export const taskSchema = object({
     /** ID của task. */
@@ -47,7 +49,19 @@ export const taskSchema = object({
     noHeader: boolean(),
 
     /** ID bí mật của task. Dùng để xác thực tin nhắn gọi hàm từ task đến core. */
-    secretId: nanoid_()
+    secretId: string(),
+
+    /** Element iframe của task này. */
+    iframe: transform((v) => v as HTMLIFrameElement | undefined),
+
+    /** Hàm postMessage của iframe. Cũng cho biết task đã có thể nhận tin nhắn. */
+    postMessage: transform((v) => v as typeof window.postMessage | undefined),
+
+    /** Đối tượng quản lý trạng thái đã sẵn sàng của task. */
+    ready: transform((v) => v as PromiseWithResolvers<void> | undefined),
+
+    /** Các quyền của task. */
+    perms: transform((v) => v as TaskPermissions)
 })
 
 /** Một tác vụ. */
@@ -55,26 +69,39 @@ export interface Task extends output<typeof taskSchema> {}
 
 export type MaybeTask = Task | undefined | void
 
+export type TaskProp = keyof Task
+
+export const taskProps = Object.keys(taskSchema.shape) as TaskProp[]
+export const taskPropsMap = Object.fromEntries(
+    taskProps.map((prop) => {
+        return [prop, true]
+    })
+) as Record<TaskProp, true>
+
 export const minimizedTaskWidth = 200
 export const minimizedTaskHeight = 32
 
-export function makeTask(): Task {
+export function makeTask(app?: App): Task {
     const task = proxy<Task>({
         id: 0,
         name: '',
         path: '',
-        type: AppType.User,
+        type: AppType.Normal,
         icon: 'task',
         title: '',
         maximized: false,
         minimized: false,
         fullscreen: false,
-        width: 800,
-        height: 600,
+        width: 1000,
+        height: 640,
         x: 0,
         y: 0,
         noHeader: false,
-        secretId: ''
+        secretId: '',
+        iframe: undefined,
+        postMessage: undefined,
+        ready: undefined,
+        perms: makeTaskPermissions(app)
     })
     return task
 }

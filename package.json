@@ -40,6 +40,7 @@
         "esbuild-wasm": "0.27.2",
         "js-yaml": "4.1.1",
         "lodash-es": "4.17.23",
+        "modern-monaco": "0.4.0",
         "motion": "12.37.0",
         "nanoid": "5.1.7",
         "react": "^19.2.4",

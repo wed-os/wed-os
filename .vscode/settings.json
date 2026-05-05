@@ -39,6 +39,9 @@
     "[typescriptreact]": {
         "editor.formatOnSave": true
     },
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
     "[tailwindcss]": {
         "editor.formatOnSave": true
     },

@@ -1,8 +1,8 @@
-import { os, Store } from '@task/constants/os'
-import { Task } from '@task/constants/task'
+import { os, StoreProp } from '@task/constants/os'
+import { TaskProp } from '@task/constants/task'
 
 /**
- * Đổi các thuộc tính xác định trong os thành getter/setter.
+ * Biến các thuộc tính xác định trong os thành getter/setter.
  *
  * Khi chạy task os WedOS, ta có os.name là tên hđh, chạy một task nữa, vd FileManager, ta
  * có task.name là tên task đó, đồng bộ task.name từ core sang os.name phía task. Bây giờ
@@ -10,10 +10,9 @@ import { Task } from '@task/constants/task'
  * không bị trùng tên với name.
  */
 export function defineOSAccessors() {
-    const accessors: Partial<Record<keyof Store, keyof Task>> = {
+    const accessors: Partial<Record<StoreProp, TaskProp>> = {
         osName: 'name'
     }
-
     for (const [prop, alias] of Object.entries(accessors)) {
         Object.defineProperty(os, prop, {
             enumerable: true,

@@ -6,15 +6,22 @@ declare global {
      * Build code TS.
      *
      * @param entryPoints Đường dẫn file index trong {@link codesMap}.
+     * @param isCoreSide Code này được build cho core hay task. Mặc định là task (false).
      * @param codesMap Danh sách file được sử dụng để import trong code, key là đường dẫn
      *   file, value là nội dung file.
-     * @param isCoreSide Code này được build cho core hay task.
      */
     function buildCode(
         entryPoints: string | string[],
-        codesMap: Record<string, string>,
-        isCoreSide: boolean
+        isCoreSide: boolean,
+        codesMap: Record<string, string>
     ): Promise<BuildResult>
+
+    /**
+     * Thu nhỏ kích thước code CSS.
+     *
+     * @param css Code CSS cần thu nhỏ.
+     */
+    function minifyCss(css: string): Promise<string>
 
     var taskCss: string
     var taskTempl: string

@@ -1,1 +1,1 @@
-export const taskRemoteNames = [] as const
+export const taskRemoteNames = ["requestClose","sync"] as const

@@ -13,7 +13,7 @@
     *,
     ::before,
     ::after {
-        @apply border-neutral-600 outline-neutral-600;
+        @apply border-neutral-600 align-middle outline-neutral-600;
     }
 }
 
@@ -27,4 +27,8 @@ body {
 
 #wed-root {
     @apply h-full;
+}
+
+.dark {
+    @apply scheme-dark;
 }

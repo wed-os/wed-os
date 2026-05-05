@@ -1,8 +1,7 @@
 /** @public */
 export enum AppType {
     OS = 'os',
-    Core = 'core',
-    User = 'user'
+    Normal = 'normal'
 }
 
 /** @public */
@@ -18,11 +17,7 @@ export const appTypeItems: AppTypeItem[] = [
         label: 'Hệ điều hành'
     },
     {
-        value: AppType.Core,
-        label: 'Lõi'
-    },
-    {
-        value: AppType.User,
-        label: 'Người dùng'
+        value: AppType.Normal,
+        label: 'Thông thường'
     }
 ]

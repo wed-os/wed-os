@@ -1,11 +1,11 @@
 import { load } from 'js-yaml'
 
 /**
- * Chuyển chuỗi YAML thành đối tượng.
+ * Chuyển văn bản YAML thành đối tượng.
  *
- * @param text Chuỗi YAML hợp lệ.
+ * @param yaml Văn bản YAML hợp lệ.
  * @public
  */
-export function parseYaml(text: string): unknown {
-    return load(text)
+export function parseYaml(yaml: string): unknown {
+    return load(yaml)
 }

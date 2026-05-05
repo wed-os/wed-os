@@ -34,29 +34,27 @@
     </head>
 
     <body>
-        <div id="wed-root">
-            <script type="module">
-                import { buildCode } from './esbuild.js'
+        <script type="module">
+            import { buildCode } from './esbuild.js'
 
-                const paths = ['/boot', '/paths']
-                const texts = await Promise.all(
-                    paths.map((path) => {
-                        return fetch(`${path}.ts`).then((res) => res.text())
-                    })
-                )
-                const result = await buildCode(
-                    paths[0],
-                    Object.fromEntries(texts.map((text, i) => [paths[i], text])),
-                    true
-                )
-                const codeJs = result.outputFiles[0].text
+            const paths = ['/boot', '/paths']
+            const texts = await Promise.all(
+                paths.map((path) => {
+                    return fetch(`${path}.ts`).then((res) => res.text())
+                })
+            )
+            const result = await buildCode(
+                paths[0],
+                true,
+                Object.fromEntries(texts.map((text, i) => [paths[i], text]))
+            )
+            const codeJs = result.outputFiles[0].text
 
-                const script = document.createElement('script')
-                script.type = 'module'
-                script.text = codeJs
-                document.head.appendChild(script)
-            </script>
-        </div>
+            const script = document.createElement('script')
+            script.type = 'module'
+            script.text = codeJs
+            document.head.appendChild(script)
+        </script>
 
         <script id="wed-js" type="module"></script>
     </body>

@@ -1,5 +1,6 @@
-import { FontIconName, IconName, fontIconNames } from '@task/constants/iconNames'
+import { IconName } from '@task/constants/iconNames'
 import { cn } from '@task/funcs/cn'
+import { getFontIconGlyph } from '@task/funcs/getFontIconGlyph'
 import { CSSProperties, useMemo } from 'react'
 
 interface IconProps {
@@ -13,13 +14,8 @@ const emptyGlyph: string = '!'
 /** @public */
 export function Icon({ className, style, name }: IconProps) {
     const glyph = useMemo<string>(() => {
-        if (typeof name !== 'string') return emptyGlyph
-
-        const index = fontIconNames.indexOf(name as FontIconName)
-        if (index === -1) return emptyGlyph
-
-        const charCode = index + 0x21
-        return String.fromCharCode(charCode)
+        if (name === undefined) return emptyGlyph
+        return getFontIconGlyph(name)
     }, [name])
 
     return (

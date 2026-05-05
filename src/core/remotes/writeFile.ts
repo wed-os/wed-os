@@ -17,8 +17,6 @@ export async function writeFile(
 ): Promise<Ent> {
     path = entToPath(path)
 
-    const fsEnt = await fs.writeFile(path, data)
-    const ent = await makeEnt(fsEnt)
-
-    return ent
+    const fsFile = await fs.writeFile(path, data)
+    return makeEnt(fsFile)
 }

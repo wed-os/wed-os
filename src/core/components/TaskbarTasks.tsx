@@ -1,14 +1,11 @@
-import { getNonOSTasks } from '@core/funcs/getNonOSTasks'
+import { useNonOSTasks } from '@core/hooks/useNonOSTasks'
 import { minimize } from '@core/remotes/minimize'
 import { Button } from '@task/components/Button'
 import { Task } from '@task/constants/task'
-import { useOS } from '@task/hooks/useOS'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 
 export function TaskbarTasks() {
-    const { tasks } = useOS()
-
-    const nonOSTasks = useMemo(getNonOSTasks, [tasks])
+    const nonOSTasks = useNonOSTasks()
 
     const taskbarTaskClick = useCallback((task: Task) => {
         minimize.call(task)

@@ -83,15 +83,16 @@ function generateRemotesFile({ side }: SideItem): void {
     writeFileSync(path, code)
 }
 
-function generateRemoteTypesFile({ side }: SideItem): void {
+function generateRemoteTypesFile({ side, upperSide }: SideItem): void {
     const codes: Code = [
         'import { Asyncify } from "@task/types/types"\n',
-        map(funcsCache[side], ({ funcName }) => {
-            return `import { ${funcName} } from '@${side}/remotes/${funcName}'\n`
-        }),
+        `import { ${side}Remotes } from '@${side}/constants/${side}Remotes'\n`,
+        `export type ${upperSide}Remotes = typeof ${side}Remotes\n`,
         flatMap(funcsCache[side], ({ funcName, upperFuncName, isAsync }) => [
-            `export type ${upperFuncName}Remote = `,
-            isAsync ? `typeof ${funcName}` : `Asyncify<typeof ${funcName}>`,
+            `export type ${upperFuncName}AsyncRemote = `,
+            isAsync
+                ? `typeof ${side}Remotes.${funcName}`
+                : `Asyncify<typeof ${side}Remotes.${funcName}>`,
             '\n'
         ])
     ]
@@ -102,13 +103,18 @@ function generateRemoteTypesFile({ side }: SideItem): void {
 
 function generateProxiesFile({ side, oppositeSide }: SideItem): void {
     const codes: Code = [
-        'import type { ',
-        map(funcsCache[side], ({ upperFuncName }) => `${upperFuncName}Remote`).join(', '),
-        ` } from '@${side}/types/${side}RemoteTypes'\n`,
+        'import { invoke } from "@task/funcs/invoke"\n',
+        side === Side.Task
+            ? 'import { Task } from "@task/constants/task"\n'
+            : 'import { os } from "@task/constants/os"\n',
+        'import type {\n',
+        map(funcsCache[side], ({ upperFuncName }) => `${upperFuncName}AsyncRemote`).join(',\n'),
+        `\n} from '@${side}/types/${side}RemoteTypes'\n`,
         flatMap(funcsCache[side], ({ funcName, upperFuncName, jsdoc }) => [
             `\n${jsdoc}\n`,
-            `export const ${funcName}: ${upperFuncName}Remote = async (...args) => {\n`,
-            '}\n'
+            `export const ${funcName} = async function(${side === Side.Task ? 'this: Task,' : ''}...args) {\n`,
+            `return invoke(${side === Side.Task ? 'this' : 'os'}, '${funcName}', args)\n`,
+            `} as ${upperFuncName}AsyncRemote\n`
         ])
     ]
     const code = codes.flat(2).join('')

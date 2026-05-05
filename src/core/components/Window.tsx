@@ -1,18 +1,21 @@
-import { CoreApp } from '@core/components/CoreApp'
+import { subscribeTask } from '@core/funcs/subscribeTask'
 import { maximize } from '@core/remotes/maximize'
 import { minimize } from '@core/remotes/minimize'
+import { readFile } from '@core/remotes/readFile'
 import { Button } from '@task/components/Button'
 import { Icon } from '@task/components/Icon'
 import { easeOutQuint } from '@task/constants/easings'
 import { minimizedTaskHeight, minimizedTaskWidth, Task } from '@task/constants/task'
 import { clamp } from '@task/funcs/clamp'
 import { cn } from '@task/funcs/cn'
-import { isOSOrCoreTask } from '@task/funcs/isOSOrCoreTask'
+import { isOSTask } from '@task/funcs/isOSTask'
 import { isSelfEvent } from '@task/funcs/isSelfEvent'
+import { parseHtml } from '@task/funcs/parseHtml'
+import { ref } from '@task/funcs/ref'
 import { useOS } from '@task/hooks/useOS'
+import { useAsyncEffect } from 'ahooks'
 import { motion, TargetAndTransition, useDragControls } from 'motion/react'
 import { createElement, PointerEvent, useEffect, useMemo, useRef, useState } from 'react'
-import { createRoot } from 'react-dom/client'
 import { useSnapshot } from 'valtio'
 
 interface WindowProps {
@@ -20,21 +23,34 @@ interface WindowProps {
 }
 
 export function Window({ task }: WindowProps) {
-    const { desktopX, desktopY, desktopWidth, desktopHeight } = useOS()
-    const { fullscreen, maximized, minimized, noHeader, width, height, x, y } = useSnapshot(task)
+    const { desktopX, desktopY, desktopWidth, desktopHeight, component } = useOS()
+    const {
+        id,
+        path,
+        icon,
+        title,
+        fullscreen,
+        maximized,
+        minimized,
+        noHeader,
+        width,
+        height,
+        x,
+        y,
+        secretId
+    } = useSnapshot(task)
 
-    const isOSOrCore = isOSOrCoreTask(task)
+    const isOS = isOSTask(task)
     const isHeaderVisible = !noHeader && !fullscreen
     const isFullSize = (fullscreen || maximized) && !minimized
 
     const dragControl = useDragControls()
     const [dragging, setDragging] = useState(false)
     const startDragEvent = useRef<PointerEvent>(null)
-    const mounter = useRef<HTMLDivElement | null>(null)
-    const iframer = useRef<HTMLIFrameElement | null>(null)
+    const iframeRef = useRef<HTMLIFrameElement>(null)
 
     const taskbarTaskRect = useMemo(() => {
-        const taskbarTaskEl = document.querySelector(`[data-wed-taskbar-task-id="${task.id}"]`)
+        const taskbarTaskEl = document.querySelector(`[data-wed-taskbar-task-id="${id}"]`)
         const fallbackRect = {
             width: minimizedTaskWidth,
             height: minimizedTaskHeight,
@@ -109,11 +125,74 @@ export function Window({ task }: WindowProps) {
         }
     }, [y, height, desktopY, desktopHeight])
 
+    useAsyncEffect(async () => {
+        const iframe = iframeRef.current
+        if (!iframe) return
+
+        task.iframe = ref(iframe)
+        const tsx = await readFile(`${path}/app.tsx`)
+        let css
+        try {
+            css = await readFile(`${path}/app.css`)
+        } catch {
+            css = ''
+        }
+        let html
+        try {
+            html = await readFile(`${path}/app.html`)
+        } catch {
+            html = ''
+        }
+        const doc = parseHtml(taskTempl)
+
+        css = taskCss + css
+        const cssEl = doc.querySelector<HTMLStyleElement>('#wed-css')!
+        cssEl.textContent = css
+
+        if (html) {
+            const importmapEl = doc.querySelector<HTMLScriptElement>('script#wed-importmap')!
+            const htmlDoc = parseHtml(html)
+            const htmlImportmapEl = htmlDoc.querySelector<HTMLScriptElement>(
+                'script[type="importmap"]'
+            )
+            if (htmlImportmapEl) {
+                importmapEl.text = htmlImportmapEl.text
+            }
+        }
+
+        const { outputFiles, errors } = await buildCode('@task/taskScript', false, {
+            ...codesMap,
+            '/src/task/components/App': tsx
+        })
+        if (errors[0]) throw Error(errors[0].text)
+        if (!outputFiles?.[0]) throw Error('Không thấy file output.')
+        const js = outputFiles[0].text
+        const jsEl = doc.querySelector<HTMLScriptElement>('#wed-js')!
+        jsEl.text = js
+
+        const secretIdEl = doc.querySelector<HTMLMetaElement>('meta[name="wed:secret-id"]')!
+        secretIdEl.content = secretId
+
+        const srcdoc = doc.documentElement.outerHTML
+        iframe.allow = ['storage-access'].join(',')
+        iframe.sandbox.add(
+            'allow-downloads',
+            'allow-forms',
+            'allow-orientation-lock',
+            'allow-pointer-lock',
+            'allow-popups',
+            'allow-popups-to-escape-sandbox',
+            'allow-presentation',
+            'allow-same-origin',
+            'allow-scripts',
+            'allow-storage-access-by-user-activation'
+        )
+        iframe.srcdoc = srcdoc
+    }, [])
+
     useEffect(() => {
-        if (!isOSOrCore || !mounter.current) return
-        const root = createRoot(mounter.current)
-        root.render(<CoreApp />)
-        return root.unmount
+        const unsubscribe = subscribeTask(task)
+        return unsubscribe
     }, [])
 
     return (
@@ -121,7 +200,7 @@ export function Window({ task }: WindowProps) {
             className="absolute flex flex-col bg-neutral-900 shadow-lg outline"
             initial={{
                 ...rect,
-                borderRadius: 12,
+                borderRadius: 10,
                 scale: 0.95
             }}
             animate={{
@@ -155,6 +234,7 @@ export function Window({ task }: WindowProps) {
                 task.y += info.offset.y
             }}
         >
+            {/** Thanh tiêu đề. */}
             {isHeaderVisible && (
                 <motion.div
                     className="flex items-center p-1 *:pointer-events-none"
@@ -164,8 +244,8 @@ export function Window({ task }: WindowProps) {
                 >
                     <div className="w-30" />
                     <div className="flex min-w-0 flex-auto items-center justify-center gap-2">
-                        <Icon name={task.icon} />
-                        <div className="truncate">{task.title}</div>
+                        <Icon name={icon} />
+                        <div className="truncate">{title}</div>
                     </div>
                     <div className="flex items-center *:pointer-events-auto">
                         <Button
@@ -180,21 +260,17 @@ export function Window({ task }: WindowProps) {
                             icon="plus"
                             onClick={() => maximize.call(task)}
                         />
-                        <Button
-                            className={isFullSize ? '' : 'rounded-tr-lg'}
-                            size="small"
-                            variant="minimal"
-                            color="danger"
-                            icon="xmark"
-                        />
+                        <Button size="small" variant="minimal" color="danger" icon="xmark" />
                     </div>
                 </motion.div>
             )}
+
+            {/** Thân cửa sổ. */}
             <motion.div
                 className="flex-1"
                 initial={{
                     padding: 4,
-                    borderRadius: 10
+                    borderRadius: 8
                 }}
                 animate={{
                     padding: isFullSize ? 0 : undefined,
@@ -202,16 +278,19 @@ export function Window({ task }: WindowProps) {
                     borderRadius: isFullSize ? 0 : undefined
                 }}
             >
-                {createElement(isOSOrCore ? motion.div : motion.iframe, {
-                    ref: isOSOrCore ? mounter : (iframer as any),
-                    className: cn('size-full bg-neutral-900'),
-                    initial: {
-                        borderRadius: 8
-                    },
-                    animate: {
-                        borderRadius: isFullSize ? 0 : undefined
-                    }
-                })}
+                {isOS && createElement(component)}
+                {!isOS && (
+                    <motion.iframe
+                        ref={iframeRef}
+                        className={cn('size-full bg-neutral-900')}
+                        initial={{
+                            borderRadius: 6
+                        }}
+                        animate={{
+                            borderRadius: isFullSize ? 0 : undefined
+                        }}
+                    />
+                )}
             </motion.div>
         </motion.div>
     )
